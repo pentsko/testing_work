@@ -1,28 +1,25 @@
 class MessagesController < ApplicationController
 
-	def show
-		@messages = Message.all
-		render json: @messages, only: [:id]
 
+	def show
+		@messages = Message.find(params[:id])
+		render json: @messages
 		end
 
 	def create
-		@message = Message.new(message_params)
+		@messages = Message.new(message_params)
 
-		if @message.save
-			render json: @message, status: :created, location: @message
-		else
-			render json: @message.errors, status: :unprocessable_enitity
-		end
+		# if @messages.save
+		# 	render json: @messages, status: :created
+		# else
+		# 	render json: @messages.errors, status: :unprocessable_enitity
+		# end
 	end
 
 	private
-
 	def message_params
-		params.require(:message).permit(:body)
+		params.require(:messages).permit(:body)
 	end
-
-
 
 end
 
