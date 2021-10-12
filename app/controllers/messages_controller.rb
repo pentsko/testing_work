@@ -2,17 +2,27 @@ class MessagesController < ApplicationController
 
 	def show
 		@messages = Message.find(params[:id])
-		if render json: @messages
-			@messages[:readed] = true
-		else
-			render json: "You already requested this massage"
-			end
+		# render json: count = %x{wc -l #{@messages}}.split.first.to_i
+		# render json: @messages[:id]
+
+		# puts
+		# @count = %x{wc -l < "#{@messages[:id]}"}.to_i
+		# render json: hash[:id].count
+		# if count > 1
+		# 	@messages[:read] == true || false
+			
+		render json: @messages
+		# render json: @messages[:read] == false
+		#
+		# @messages.toggle(:read)
+		# 	 render json: @messages
+		# else
+		# 	render json: "You already request this message"
+		# end
 		end
 
 	def create
 		@messages = Message.new(message_params)
-
-
 		if @messages.save
 			render json: "http://localhost:3000/messages/#{@messages[:id].to_s}"
 		else
