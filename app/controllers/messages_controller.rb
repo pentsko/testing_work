@@ -1,16 +1,22 @@
 class MessagesController < ApplicationController
 
 	def show
-		@messages = Message.all
-		render json: @messages, only: [:id]
+		@message = Message.find(params[:id])
 
+
+			if @message.read
+				render json: {info: "You already requested this message"}
+			else
+				render json: {body: @message.body}
+				@message.read = true
+				@message.save
+			end
 		end
 
 	def create
 		@message = Message.new(message_params)
-
 		if @message.save
-			render json: @message, status: :created, location: @message
+			render json: {link: "http://localhost:3000/messages/#{@message.id}"}
 		else
 			render json: @message.errors, status: :unprocessable_enitity
 		end
@@ -19,11 +25,9 @@ class MessagesController < ApplicationController
 	private
 
 	def message_params
-		params.require(:message).permit(:body)
+		params.require(:messages).permit(:body)
 	end
-
-
 
 end
 
-# find_by(params[:id])
+
