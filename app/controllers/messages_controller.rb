@@ -2,7 +2,15 @@ class MessagesController < ApplicationController
 
 	def show
 		@message = Message.find(params[:id])
-		render json: {body: @message.body}
+
+
+			if @message.read
+				render json: {info: "You already requested this message"}
+			else
+				render json: {body: @message.body}
+				@message.read = true
+				@message.save
+			end
 		end
 
 	def create
