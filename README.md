@@ -1,24 +1,6 @@
-# README
+# Messages API
+The application implements an excercise to build a simple API for exchanging messages.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Two endpoints are available:
+- `POST /messages` accepts JSON `{"body": "some string"}` and creates a message and returns JSON `{"link": "http://localhost:3000/messages/58"}`;
+- `GET /messages/:id` returns JSON `{"body": "Some text here"}` if messages is shown for the first time and returns JSON `{"info": "You already requested this message"}` if message has been shown already;
